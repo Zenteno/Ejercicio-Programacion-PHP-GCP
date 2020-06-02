@@ -17,7 +17,7 @@ class StudentMiddleware
 	public function handle($request, Closure $next)
 	{
 		if(strcasecmp($request->header('content-type'), "application/json")!=0)
-			return response('',400);
+			return response([],400);
 		$v = Validator::make($request->all(), [
             'rut' => 'required|string|cl_rut',
             'name' => 'required',
@@ -26,7 +26,7 @@ class StudentMiddleware
             'course' => 'required|integer|exists:courses,id',
         ]);
         if($v->fails())
-        	return response('',400);
+        	return response([],400);
 		return $next($request);
 	}
 }

@@ -11,36 +11,37 @@
 |
 */
 
-$router->get('/', function () use ($router) {
-    return $router->app->version();
-});
+$router->get('/token', 'TokenController@tokenizer');
 
-$router->group(['prefix' => 'courses'], function () use ($router) {
+$router->group(['prefix' => 'courses', "middleware"=>"jwt"], function () use ($router) {
     $router->get('', 'CourseController@index');
-    $router->post('',[
-    	'middleware'=> 'course',
-    	'uses'=>'CourseController@store'
-    ]);
-    $router->put('{id}',[
-    	'middleware'=> 'course',
-    	'uses'=>'CourseController@update'
-    ]);
     $router->get('all', 'CourseController@index');
     $router->get('{id}', 'CourseController@show');
     $router->delete('{id}', 'CourseController@destroy');
-});
-
-$router->group(['prefix' => 'students'], function () use ($router) {
-    $router->get('', 'StudentController@index');
     $router->post('',[
-    	'middleware'=> 'student',
-    	'uses'=>'StudentController@store'
+        'middleware'=> 'course',
+        'uses'=>'CourseController@store'
     ]);
     $router->put('{id}',[
-    	'middleware'=> 'student',
-    	'uses'=>'StudentController@update'
+        'middleware'=> 'course',
+        'uses'=>'CourseController@update'
     ]);
+    
+});
+
+$router->group(['prefix' => 'students', "middleware"=>"jwt"], function () use ($router) {
+    $router->get('', 'StudentController@index');
     $router->get('all', 'StudentController@index');
     $router->get('{id}', 'StudentController@show');
     $router->delete('{id}', 'StudentController@destroy');
+
+    $router->post('',[
+        'middleware'=> 'student',
+        'uses'=>'StudentController@store'
+    ]);
+    $router->put('{id}',[
+        'middleware'=> 'student',
+        'uses'=>'StudentController@update'
+    ]);
+    
 });

@@ -79,6 +79,7 @@ $app->configure('app');
 $app->routeMiddleware([
     'course' => App\Http\Middleware\CourseMiddleware::class,
     'student' => App\Http\Middleware\StudentMiddleware::class,
+    'jwt' => App\Http\Middleware\JwtMiddleware::class,
 ]);
 
 /*
