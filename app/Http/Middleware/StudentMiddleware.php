@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 use Illuminate\Support\Facades\Validator;
 use Closure;
+use ValidateRequests;
 
 class StudentMiddleware
 {
@@ -18,7 +19,7 @@ class StudentMiddleware
 		if(strcasecmp($request->header('content-type'), "application/json")!=0)
 			return response('',400);
 		$v = Validator::make($request->all(), [
-            'rut' => 'required',
+            'rut' => 'required|string|cl_rut',
             'name' => 'required',
             'lastName' => 'required',
             'age' => 'required|integer|min:19',
