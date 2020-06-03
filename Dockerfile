@@ -22,6 +22,4 @@ ENV SWOOLE_HTTP_HOST=0.0.0.0
 
 EXPOSE 1215
 
-CMD php artisan migrate
-
-CMD php artisan swoole:http start
+ENTRYPOINT php artisan migrate && php artisan swoole:http start
