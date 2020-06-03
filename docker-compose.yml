@@ -9,21 +9,17 @@ services:
     container_name: app
     restart: unless-stopped
     tty: true
-    working_dir: /var/www
-    volumes:
-      - ./:/var/www
     networks:
       - app-network
 
   #Nginx Service
   webserver:
-    image: nginx:latest
+    build:
+      context: .
+      dockerfile: Dockernginx
     container_name: webserver
     restart: unless-stopped
     tty: true
-    volumes:
-      - ./:/var/www
-      - ./nginx/conf.d:/etc/nginx/conf.d
     ports:
       - "80:80"
     networks:
