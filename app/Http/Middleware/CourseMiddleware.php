@@ -21,8 +21,10 @@ class CourseMiddleware
             'name' => 'required|string|max:100',
             'code' => 'required|max:4'
         ]);
-        if($v->fails())
+        if($v->fails()){
+        	//var_dump($v->errors());
         	return response([],400);
+        }
         return $next($request);
 	}
 }

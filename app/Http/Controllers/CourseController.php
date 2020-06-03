@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Course;
+use App\Student;
 
 class CourseController extends Controller
 {
@@ -80,6 +81,9 @@ class CourseController extends Controller
         $course = Course::find($id);
         if($course==null)
             return response([],404);
+        $students = Student::where(["course"=>$id])->get();
+        if(count($students)>0)
+            return response([],400);
         $course->delete();
         return response([],200);
     }
