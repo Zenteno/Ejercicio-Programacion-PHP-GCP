@@ -8,23 +8,12 @@ services:
       dockerfile: Dockerfile
     container_name: app
     restart: unless-stopped
-    tty: true
-    networks:
-      - app-network
-
-  #Nginx Service
-  webserver:
-    build:
-      context: .
-      dockerfile: Dockernginx
-    container_name: webserver
-    restart: unless-stopped
-    tty: true
     ports:
-      - "80:80"
+      - "80:1215"
+    tty: true
     networks:
       - app-network
-
+  
   #MySQL Service
   db:
     image: mariadb:latest
