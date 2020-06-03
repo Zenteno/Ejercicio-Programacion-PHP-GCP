@@ -31,6 +31,17 @@ class StudentController extends Controller
     }
 
     /**
+     * Display a listing of students paginated.
+     *
+     * @return Response
+     */
+    
+    public function indexPaginated(){
+        return Student::paginate(15);   
+    }
+
+
+    /**
      * Store a newly created student in storage.
      *
      * @return Response

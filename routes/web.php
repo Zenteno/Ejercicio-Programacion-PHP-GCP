@@ -14,7 +14,7 @@
 $router->get('/token', 'TokenController@tokenizer');
 
 $router->group(['prefix' => 'courses', "middleware"=>"jwt"], function () use ($router) {
-    $router->get('', 'CourseController@index');
+    $router->get('', 'CourseController@indexPaginated');
     $router->get('all', 'CourseController@index');
     $router->get('{id}', 'CourseController@show');
     $router->delete('{id}', 'CourseController@destroy');
@@ -27,7 +27,7 @@ $router->group(['prefix' => 'courses', "middleware"=>"jwt"], function () use ($r
 });
 
 $router->group(['prefix' => 'students', "middleware"=>"jwt"], function () use ($router) {
-    $router->get('', 'StudentController@index');
+    $router->get('', 'StudentController@indexPaginated');
     $router->get('all', 'StudentController@index');
     $router->get('{id}', 'StudentController@show');
     $router->delete('{id}', 'StudentController@destroy');

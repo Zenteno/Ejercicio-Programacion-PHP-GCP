@@ -16,7 +16,7 @@ class TokenController extends Controller
     	$time = time();
     	$token = (new Builder())
 	        ->issuedAt($time)
-	        ->expiresAt($time + 60*10)
+	        ->expiresAt($time + 60*30)
 	        ->getToken();
     	return ["token" =>  strval($token)];
     }

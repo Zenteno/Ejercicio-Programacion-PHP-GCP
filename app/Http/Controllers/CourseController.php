@@ -30,6 +30,16 @@ class CourseController extends Controller
         return Course::all();
     }
 
+
+    /**
+     * Display a listing of courses paginated.
+     *
+     * @return Response
+     */
+    public function indexPaginated(){
+        return Course::paginate(15);   
+    }
+
     /**
      * Store a newly created course in storage.
      *
