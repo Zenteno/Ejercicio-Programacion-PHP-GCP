@@ -18,14 +18,11 @@ $router->group(['prefix' => 'courses', "middleware"=>"jwt"], function () use ($r
     $router->get('all', 'CourseController@index');
     $router->get('{id}', 'CourseController@show');
     $router->delete('{id}', 'CourseController@destroy');
-    $router->post('',[
-        'middleware'=> 'course',
-        'uses'=>'CourseController@store'
-    ]);
-    $router->put('{id}',[
-        'middleware'=> 'course',
-        'uses'=>'CourseController@update'
-    ]);
+    
+    $router->group(['middleware'=>'course'],function () use ($router){
+        $router->post('','CourseController@store');
+        $router->put('{id}','CourseController@update');        
+    });
     
 });
 
@@ -35,13 +32,9 @@ $router->group(['prefix' => 'students', "middleware"=>"jwt"], function () use ($
     $router->get('{id}', 'StudentController@show');
     $router->delete('{id}', 'StudentController@destroy');
 
-    $router->post('',[
-        'middleware'=> 'student',
-        'uses'=>'StudentController@store'
-    ]);
-    $router->put('{id}',[
-        'middleware'=> 'student',
-        'uses'=>'StudentController@update'
-    ]);
+    $router->group(['middleware'=>'student'],function () use ($router){
+        $router->post('','StudentController@store');
+        $router->put('{id}','StudentController@update');        
+    });
     
 });

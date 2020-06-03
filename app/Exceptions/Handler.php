@@ -48,7 +48,9 @@ class Handler extends ExceptionHandler
      * @throws \Throwable
      */
     public function render($request, Throwable $exception)
-    {
+    {   
+        if ($exception->getStatusCode() == 404)
+            return response()->json(['message' => 'Not Found!'], 404);
         return parent::render($request, $exception);
     }
 }

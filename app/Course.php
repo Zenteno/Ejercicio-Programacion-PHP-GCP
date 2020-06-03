@@ -26,4 +26,7 @@ class Course extends Model
         'created_at','updated_at'
     ];
 
+    public function students(){
+        return $this->hasMany('App\Student',"course");
+    }
 }

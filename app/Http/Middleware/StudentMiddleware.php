@@ -19,9 +19,9 @@ class StudentMiddleware
 		if(strcasecmp($request->header('content-type'), "application/json")!=0)
 			return response([],400);
 		$v = Validator::make($request->all(), [
-            'rut' => 'required|string|cl_rut',
-            'name' => 'required',
-            'lastName' => 'required',
+            'rut' => 'required|string|cl_rut|max:15',
+            'name' => 'required|string|max:100',
+            'lastName' => 'required|string|max:100',
             'age' => 'required|integer|min:19',
             'course' => 'required|integer|exists:courses,id',
         ]);

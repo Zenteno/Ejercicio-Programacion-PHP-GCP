@@ -24,4 +24,9 @@ class Student extends Model
     protected $hidden = [
         'created_at','updated_at'
     ];
+
+    public function course(){
+        return $this->belongsTo("App\Course","course","id");
+    }
+
 }
