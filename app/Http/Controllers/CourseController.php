@@ -49,7 +49,7 @@ class CourseController extends Controller
     public function store(Request $request)
     {
         $data = Course::create($request->all());
-        return response([],201);
+        return response(["msg"=>"created"],201);
     }
 
     
@@ -63,10 +63,10 @@ class CourseController extends Controller
     {
         $course = Course::find($id);
         if($course==null)
-            return response([],404);
+            return response(["msg"=>"not found"],404);
         else
             $course->fill($request->all());
-        return response([],200);
+        return response(["msg"=>"successfully updated"],200);
     }
 
 
@@ -80,11 +80,11 @@ class CourseController extends Controller
     {
         $course = Course::find($id);
         if($course==null)
-            return response([],404);
+            return response(["msg"=>"not found"],404);
         $students = Student::where(["course"=>$id])->get();
         if(count($students)>0)
-            return response([],400);
+            return response(["msg"=>"this course has students. Can't delete it"],400);
         $course->delete();
-        return response([],200);
+        return response(["msg"=>"successfully deleted"],200);
     }
 }

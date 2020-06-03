@@ -16,14 +16,14 @@ class CourseMiddleware
 	public function handle($request, Closure $next)
 	{
 		if(strcasecmp($request->header('content-type'), "application/json")!=0)
-			return response([],400);
+			return response(["msg"=>"missing json content-type"],400);
 		$v = Validator::make($request->all(), [
             'name' => 'required|string|max:100',
             'code' => 'required|max:4'
         ]);
         if($v->fails()){
         	//var_dump($v->errors());
-        	return response([],400);
+    		return response(["msg"=>"Input Error"],400);
         }
         return $next($request);
 	}

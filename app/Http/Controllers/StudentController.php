@@ -63,10 +63,10 @@ class StudentController extends Controller
     {
         $student = Student::find($id);
         if($student==null)
-            return response('',404);
+            return response(["msg"=>"not found"],404);
         else
             $student->fill($request->all());
-        return response('',200);
+        return response(["msg"=>"successfully updated"],200);
     }
 
 
@@ -80,8 +80,8 @@ class StudentController extends Controller
     {
         $student = Student::find($id);
         if($student==null)
-            return response('',404);
+            return response(["msg"=>"not found"],404);
         $student->delete();
-        return response('',200);
+        return response(["msg"=>"successfully deleted"],200);
     }
 }
