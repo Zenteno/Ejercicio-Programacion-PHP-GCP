@@ -37,7 +37,9 @@ class StudentController extends Controller
      */
     
     public function indexPaginated(){
-        return Student::paginate(15);   
+        $size = $request->input('size', 10);
+        $page = $request->input('page',1);
+        return Student::paginate($size,['*'],'page',$page);
     }
 
 

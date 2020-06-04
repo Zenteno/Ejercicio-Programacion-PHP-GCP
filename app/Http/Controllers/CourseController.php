@@ -37,8 +37,10 @@ class CourseController extends Controller
      *
      * @return Response
      */
-    public function indexPaginated(){
-        return Course::paginate(15);   
+    public function indexPaginated(Request $request){
+        $size = $request->input('size', 10);
+        $page = $request->input('page',1);
+        return Course::paginate($size,['*'],'page',$page);   
     }
 
     /**
