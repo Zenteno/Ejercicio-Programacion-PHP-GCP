@@ -41,9 +41,6 @@
         "post-root-package-install": [
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
         ],
-        "start": [ "php -S localhost:8080 -t public"],
-        "post-install-cmd": [
-            "php artisan cache:clear"
-        ]
+        "start": [ "php -S localhost:8080 -t public"]
     }
 }
