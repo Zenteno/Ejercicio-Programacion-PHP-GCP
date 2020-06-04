@@ -46,13 +46,12 @@ jobs:
       - name: Deploy system to app engine
         run: |-
           rm Dockerfile
-          sed -i "s/_DB_PORT/${{ secrets.DB_PORT }}/g" app.yaml
-          sed -i "s/_DB_DATABASE/${{ secrets.DB_DATABASE }}/g" app.yaml
+          sed -i "s/_DB_CONNECTION/${{ secrets.DB_CONNECTION }}/g" app.yaml
           sed -i "s/_DB_USERNAME/${{ secrets.DB_USERNAME }}/g" app.yaml
           sed -i "s/_DB_PASSWORD/${{ secrets.DB_PASSWORD }}/g" app.yaml
-          sed -i "s/_DB_CONNECTION/${{ secrets._DB_CONNECTION }}/g" app.yaml
+          sed -i "s/_DB_PASSWORD/${{ secrets.DB_PASSWORD }}/g" app.yaml
           sed -i "s/CLOUD_SQL_CONNECTION_NAME/${{ secrets.CLOUD_SQL_CONNECTION_NAME }}/g" app.yaml
-          gcloud app deploy app.yaml -q
+          gcloud app deploy app.yaml -q --promote --stop-previous-version
       
       - name: Deploy system to gke
         run: |-
