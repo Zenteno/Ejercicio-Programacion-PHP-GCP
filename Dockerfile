@@ -25,6 +25,9 @@ RUN composer.phar install
 #by default swoole only runs on localhost, so we change it
 ENV SWOOLE_HTTP_HOST=0.0.0.0
 
+#enable access log
+ENV SWOOLE_HTTP_ACCESS_LOG=true
+
 #expose default swoole http port
 EXPOSE 1215
 
