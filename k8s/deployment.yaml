@@ -16,4 +16,17 @@ spec:
     spec:
       containers:
       - name: lumen-app
-        image: us.gcr.io/GCP_PROJECT_ID/IMAGE_NAME:TAG
+        image: IMAGE
+        env:
+        - name: DB_HOST
+          value: "_DB_HOST"
+        - name: DB_CONNECTION
+          value: "_DB_CONNECTION"
+        - name: DB_PORT
+          value: "_DB_PORT"
+        - name: DB_DATABASE
+          value: "_DB_DATABASE"
+        - name: DB_USERNAME
+          value: "_DB_USERNAME"
+        - name: DB_PASSWORD
+          value: "_DB_PASSWORD"
