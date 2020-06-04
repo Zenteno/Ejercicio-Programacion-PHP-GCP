@@ -41,4 +41,7 @@ jobs:
           project_id: 'proyecto-prueba-23people'
           service_account_key: ${{ secrets.GCP_KEY_FILE }}
           export_default_credentials: true
-      - run: gcloud info
+      - run: |-
+          gcloud --quiet auth configure-docker
+          gcloud container clusters get-credentials 'cluster-1' --zone "us-central1-c" --project 'proyecto-prueba-23people'
+          kubectl get pods
