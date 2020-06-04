@@ -52,7 +52,7 @@ jobs:
           sed -i "s/_DB_PASSWORD/${{ secrets.DB_PASSWORD }}/g" app.yaml
           sed -i "s/_DB_CONNECTION/${{ secrets._DB_CONNECTION }}/g" app.yaml
           sed -i "s/CLOUD_SQL_CONNECTION_NAME/${{ secrets.CLOUD_SQL_CONNECTION_NAME }}/g" app.yaml
-          gcloud app deploy app.yaml
+          gcloud app deploy app.yaml -q
       
       - name: Deploy system to gke
         run: |-
