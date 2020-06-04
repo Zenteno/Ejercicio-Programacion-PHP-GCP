@@ -35,4 +35,4 @@ ENV SWOOLE_HTTP_ACCESS_LOG=true
 EXPOSE 1215
 
 #run the migrations, if there is any and start server
-ENTRYPOINT php artisan migrate --force && php artisan swoole:http start
+ENTRYPOINT php artisan migrate --force && php artisan swoole:http start > /dev/null 2>&1 &
