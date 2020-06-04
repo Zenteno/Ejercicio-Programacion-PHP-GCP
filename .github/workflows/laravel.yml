@@ -19,7 +19,7 @@ jobs:
       run: vendor/bin/phpunit
   
   docker-build-and-push:
-    needs: laravel-test
+    needs: laravel-tests
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
