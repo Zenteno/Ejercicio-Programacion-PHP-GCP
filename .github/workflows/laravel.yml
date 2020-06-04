@@ -8,9 +8,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: StephaneBour/actions-php-lint@7.4
-      
-  laravel-tests:
 
+  laravel-tests:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -25,10 +24,10 @@ jobs:
     - uses: actions/checkout@v2
     - name: docker build
       run: |
-        docker build . -t us.gcr.io/proyecto-prueba-23people/docker_test:${GITHUB_SHA::8} -t us.gcr.io/proyecto-prueba-23people/docker_test:latest
+        docker build . -t us.gcr.io/${{secrets.GKE_PROJECT_ID }}/docker_test:${GITHUB_SHA::8} -t us.gcr.io/${{ secrets.GKE_PROJECT_ID }}/docker_test:latest
         echo ${{secrets.GCP_KEY_FILE}} | base64 -d > account.json
         cat account.json | docker login -u _json_key --password-stdin https://us.gcr.io
-        docker push us.gcr.io/proyecto-prueba-23people/docker_test
+        docker push us.gcr.io/${{ secrets.GKE_PROJECT_ID }}/docker_test
         docker logout
   
   k8-deploy:
@@ -38,10 +37,18 @@ jobs:
       - uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
         with:
           version: '290.0.1'
-          project_id: 'proyecto-prueba-23people'
+          project_id: ${{ secrets.GKE_PROJECT_ID }}
           service_account_key: ${{ secrets.GCP_KEY_FILE }}
           export_default_credentials: true
       - run: |-
           gcloud --quiet auth configure-docker
-          gcloud container clusters get-credentials 'cluster-1' --zone "us-central1-c" --project 'proyecto-prueba-23people'
-          kubectl get pods
+          gcloud container clusters get-credentials 'cluster-1' --zone ${{GKE_ZONE}} --project ${{ secrets.GKE_PROJECT_ID }}
+          kubectl set image -f k8s/deployment.yaml lumen-app=us.gcr.io/${{secrets.GKE_PROJECT_ID }}/docker_test:${GITHUB_SHA::8} --local -o yaml > k8s/deployment.yaml
+          kubectl set env -f k8s/deployment.yaml lumen-app DB_HOST=${{ secrets.DB_HOST }} --local -o yaml > k8s/deployment.yaml
+          kubectl set env -f k8s/deployment.yaml lumen-app DB_CONNECTION=${{ secrets.DB_CONNECTION }} --local -o yaml > k8s/deployment.yaml
+          kubectl set env -f k8s/deployment.yaml lumen-app DB_PORT=${{ secrets.DB_PORT }} --local -o yaml > k8s/deployment.yaml
+          kubectl set env -f k8s/deployment.yaml lumen-app DB_DATABASE=${{ secrets.DB_DATABASE }} --local -o yaml > k8s/deployment.yaml
+          kubectl set env -f k8s/deployment.yaml lumen-app DB_USERNAME=${{ secrets.DB_USERNAME }} --local -o yaml > k8s/deployment.yaml
+          kubectl set env -f k8s/deployment.yaml lumen-app DB_PASSWORD=${{ secrets.DB_PASSWORD }} --local -o yaml > k8s/deployment.yaml
+          kubectl apply -f k8s/deployment.yaml
+          kubectl apply -f k8s/service.yaml

@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: lumen-app
+  labels:
+    app: lumen-app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: lumen-app
+  template:
+    metadata:
+      labels:
+        app: lumen-app
+    spec:
+      containers:
+      - name: lumen-app
+        image: us.gcr.io/GCP_PROJECT_ID/IMAGE_NAME:TAG
