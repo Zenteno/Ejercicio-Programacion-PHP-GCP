@@ -11,9 +11,9 @@ skip_files:
 env_variables:
   # Put production environment variables here.
   
-  APP_DEBUG: true
+  APP_DEBUG: false
   APP_LOG: errorlog
-  APP_KEY: YOUR_APP_KEY
+  APP_KEY: d423f002b6662e9345e487f33ce81879
   CACHE_DRIVER: database
   SESSION_DRIVER: database
   ## Set these environment variables according to your CloudSQL configuration.
