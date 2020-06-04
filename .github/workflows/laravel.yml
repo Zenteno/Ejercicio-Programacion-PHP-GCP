@@ -42,7 +42,7 @@ jobs:
           export_default_credentials: true
       - run: |-
           gcloud --quiet auth configure-docker
-          gcloud container clusters get-credentials 'cluster-1' --zone ${{GKE_ZONE}} --project ${{ secrets.GKE_PROJECT_ID }}
+          gcloud container clusters get-credentials 'cluster-1' --zone ${{secrets.GKE_ZONE}} --project ${{ secrets.GKE_PROJECT_ID }}
           kubectl set image -f k8s/deployment.yaml lumen-app=us.gcr.io/${{secrets.GKE_PROJECT_ID }}/docker_test:${GITHUB_SHA::8} --local -o yaml > k8s/deployment.yaml
           kubectl set env -f k8s/deployment.yaml lumen-app DB_HOST=${{ secrets.DB_HOST }} --local -o yaml > k8s/deployment.yaml
           kubectl set env -f k8s/deployment.yaml lumen-app DB_CONNECTION=${{ secrets.DB_CONNECTION }} --local -o yaml > k8s/deployment.yaml
