@@ -25,9 +25,6 @@ RUN composer.phar install
 #by default swoole only runs on localhost, so we change it
 ENV SWOOLE_HTTP_HOST=0.0.0.0
 
-#daemonize server
-ENV SWOOLE_HTTP_DAEMONIZE=true
-
 #access log enabled
 ENV SWOOLE_HTTP_ACCESS_LOG=true
 
@@ -35,4 +32,4 @@ ENV SWOOLE_HTTP_ACCESS_LOG=true
 EXPOSE 1215
 
 #run the migrations, if there is any and start server
-ENTRYPOINT php artisan migrate --force && php artisan swoole:http start > /dev/null 2>&1 &
+ENTRYPOINT php artisan migrate --force && php artisan swoole:http start
