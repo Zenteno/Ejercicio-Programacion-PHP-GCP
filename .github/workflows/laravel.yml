@@ -19,7 +19,7 @@ jobs:
     - name: Execute tests (Unit and Feature tests) via PHPUnit
       run: vendor/bin/phpunit
   
-  docker-build:
+  docker-build-and-push:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -30,3 +30,15 @@ jobs:
         cat account.json | docker login -u _json_key --password-stdin https://us.gcr.io
         docker push us.gcr.io/proyecto-prueba-23people/docker_test
         docker logout
+  
+  k8-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
+        with:
+          version: '290.0.1'
+          project_id: 'proyecto-prueba-23people'
+          service_account_key: ${{ secrets.GCP_KEY_FILE }}
+          export_default_credentials: true
+      - run: gcloud info
