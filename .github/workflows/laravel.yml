@@ -16,7 +16,7 @@ jobs:
     - name: Install Dependencies
       run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
     - name: Execute tests (Unit and Feature tests) via PHPUnit
-      run: vendor/bin/phpunit --coverage-test
+      run: vendor/bin/phpunit --coverage-text
   
   docker-build-and-push:
     needs: laravel-tests
