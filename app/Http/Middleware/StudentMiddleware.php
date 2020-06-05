@@ -16,8 +16,6 @@ class StudentMiddleware
 	 */
 	public function handle($request, Closure $next)
 	{
-		if(strcasecmp($request->header('content-type'), "application/json")!=0)
-			return response(["msg"=>"missing json content-type"],400);
 		$v = Validator::make($request->all(), [
             'rut' => 'required|string|cl_rut|max:15',
             'name' => 'required|string|max:100',
