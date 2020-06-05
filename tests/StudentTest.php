@@ -163,8 +163,12 @@ class StudentTest extends TestCase
     }
 
     public function testListStudentWithToken(){
-        $headers= ["Authorization" => $this->token];
+        $headers = $this->headers;
         $response = $this->json("GET",'/students/all',[],$headers);
+        $this->assertEquals(200, $response->response->status());
+
+
+        $response = $this->json("GET",'/students',[],$headers);
         $this->assertEquals(200, $response->response->status());
     }
 
