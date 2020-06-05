@@ -19,6 +19,8 @@ class JwtMiddleware
 	 */
 	public function handle($request, Closure $next)
 	{
+		if(strcasecmp($request->header('content-type'), "application/json")!=0)
+			return response(["msg"=>"missing json content-type"],400);
 		$signer = new Sha256();
 		$key = env('TOKEN_KEY','thisIsMyLittleBe#autifulToken123#');
 		$auth = $request->header('Authorization');
