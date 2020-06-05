@@ -14,7 +14,6 @@ You will need this libraries or you can use Docker, there is a docker-compose fi
 ```
 PHP7.2+
 Mysql/Mariadb, Postgresql or SqlServer
-Swoole PHP Extension
 Pecl
 Composer
 ```
@@ -73,7 +72,7 @@ By default the test are executed using an sqlite database, you can change it edi
 To run the test:
 
 ```
-./vendor/bin/phpunit
+./vendor/bin/phpunit --coverage-text
 ```
 
 ## Deployment
@@ -93,10 +92,46 @@ Open your browser on **http://your_ip/**, and... that's all folks.
 
 If you have a Kubernetes cluster on premise or on cloud, you can deploy use it also.
 
-By default it will scale the pods to 3 replicas, and expose the service with a load balancer. You to edit this, just review the **k8s** folder.
+By default it will scale the pods to 3 replicas, and expose the service with a load balancer. To edit this, just review the **k8s** folder and edit the env variables.
 
-There's a **Github Action** witch will package the project, push the image to a **GCR** account and deploy it in **GKE**.
+The default used database is a mysql **Google Cloud SQL** instance, but it can be changed through the secrets value for **Github Actions**.
 
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: lumen-app
+  labels:
+    app: lumen-app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: lumen-app
+  template:
+    metadata:
+      labels:
+        app: lumen-app
+    spec:
+      containers:
+      - name: lumen-app
+        image: IMAGE
+        env:
+        - name: DB_HOST
+          value: "_DB_HOST"
+        - name: DB_CONNECTION
+          value: "_DB_CONNECTION"
+        - name: DB_PORT
+          value: "_DB_PORT"
+        - name: DB_DATABASE
+          value: "_DB_DATABASE"
+        - name: DB_USERNAME
+          value: "_DB_USERNAME"
+        - name: DB_PASSWORD
+          value: "_DB_PASSWORD"
+```
+
+There's a **Github Action** which will package the project, push the image to a **GCR** account and deploy it in **GKE**.
 
 ```yaml
 docker-build-and-push:
@@ -138,7 +173,7 @@ k8-deploy:
           kubectl apply -f k8s/service.yaml
 ```
 
-Just replace the secrets values with your credentials and information.
+Just replace the **secrets values** with your credentials and db connection.
 
 ### 2.- GAE ###
 You can also deploy it on **Google Application Engine**. The **Github Action** pipeline will deploy it on your GAE project.
@@ -168,8 +203,7 @@ k8-deploy:
           gcloud app deploy app.yaml -q --promote --stop-previous-version
 ```
 
-Just replace the secrets values with your credentials and information.
-
+Just replace the **secrets values** with your credentials and db connection.
 
 ## Built With
 
@@ -177,12 +211,12 @@ Just replace the secrets values with your credentials and information.
 * [Composer](https://getcomposer.org/)
 * [Swoole](https://www.swoole.co.uk/)
 * [Eloquent](https://laravel.com/docs/master/eloquent)
+* [PHP Jwt Library](https://github.com/lcobucci/jwt)
+* [Chilean Bundle](https://github.com/freshworkstudio/ChileanBundle)
 
-## Authors
+## Author
 
 * **Alberto Zenteno**
-
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
 
 ## License
 
