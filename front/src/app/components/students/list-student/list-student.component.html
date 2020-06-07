@@ -1,0 +1,33 @@
+<div class="card">
+	<div class="card-header">
+		<h4>Students</h4>
+	</div>
+	<div class="card-body">
+    <button class="btn btn-primary" routerLink="/student/add">Add Student</button>
+      
+		<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Name</th>
+      <th scope="col">Last Name</th>
+      <th scope="col">Age</th>
+      <th scope="col">Rut</th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item;index as i of students">
+        <td>{{ i+1 }}</td>
+        <td>{{ item.name }}</td>
+        <td>{{ item.lastName }}</td>
+        <td>{{ item.age }}</td>
+        <td>{{ item.rut }}</td>
+        <td>
+          <button class="btn btn-success" routerLink="/student/{{item.id}}/edit">Edit</button>
+        </td>
+        </tr>    
+  </tbody>
+</table>
+	</div>
+</div>

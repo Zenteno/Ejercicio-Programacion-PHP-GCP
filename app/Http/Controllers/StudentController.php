@@ -67,7 +67,7 @@ class StudentController extends Controller
         if($student==null)
             return response(["msg"=>"not found"],404);
         else
-            $student->fill($request->all());
+            $student->update($request->all());
         return response(["msg"=>"successfully updated"],200);
     }
 

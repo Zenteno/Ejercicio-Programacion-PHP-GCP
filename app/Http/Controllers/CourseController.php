@@ -67,7 +67,7 @@ class CourseController extends Controller
         if($course==null)
             return response(["msg"=>"not found"],404);
         else
-            $course->fill($request->all());
+            $course->update($request->all());
         return response(["msg"=>"successfully updated"],200);
     }
 
