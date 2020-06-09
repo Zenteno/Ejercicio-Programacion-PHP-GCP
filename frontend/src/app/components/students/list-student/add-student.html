@@ -1,0 +1,30 @@
+<div mat-dialog-content>
+  <h3 *ngIf="data.id==undefined; else elseBlock">Add new Student</h3>
+  <ng-template #elseBlock><h3>Edit Student #{{ data.id }}</h3></ng-template>
+  <mat-form-field>
+    <mat-label>Name</mat-label>
+    <input matInput [(ngModel)]="data.name">
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>LastName</mat-label>
+    <input matInput [(ngModel)]="data.lastName">
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Age</mat-label>
+    <input matInput [(ngModel)]="data.age">
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Rut</mat-label>
+    <input matInput [(ngModel)]="data.rut">
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Course</mat-label>
+    <mat-select [(ngModel)]="data.course">
+    	<mat-option  *ngFor="let item of courses" [value]="item.id">{{item.name}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancel</button>
+  <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Save</button>
+</div>

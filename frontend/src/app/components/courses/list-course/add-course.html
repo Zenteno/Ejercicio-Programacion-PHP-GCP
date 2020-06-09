@@ -1,0 +1,16 @@
+<div mat-dialog-content>
+  <h3 *ngIf="data.id==undefined; else elseBlock">Add new Course</h3>
+  <ng-template #elseBlock><h3>Edit Course #{{ data.id }}</h3></ng-template>
+  <mat-form-field>
+    <mat-label>Name</mat-label>
+    <input matInput [(ngModel)]="data.name">
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Code</mat-label>
+    <input matInput [(ngModel)]="data.code">
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancel</button>
+  <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Save</button>
+</div>
